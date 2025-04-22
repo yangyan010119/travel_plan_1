@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ travel.destination }} 旅行信息</title>
+</head>
+<body>
+    <h1>{{ travel.destination }} 旅行信息</h1>
+    <p>旅行开始日期：{{ travel.travel_start_date }}</p>
+    <p>旅行结束日期：{{ travel.travel_end_date }}</p>
+    <p>喜欢的旅行景点类型：{{ travel.favorite_scenic_type }}</p>
+    <p>旅行同伴：{{ travel.travel_companion }}</p>
+    <p>预算：{{ travel.budget }} 元</p>  <!-- 显示预算 -->
+
+    <a href="{% url 'add_travel_info' travel.user.id %}">提交新的旅游信息</a>
+</body>
+</html>
