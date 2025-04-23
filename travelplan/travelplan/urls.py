@@ -16,15 +16,19 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import path
 from app01 import views
 
 urlpatterns = [
+
 	path('admin/', admin.site.urls), #admin 控制界面路由
-	path('index/',views.index),
-    path('', views.home),  # 设置首页路由
-	path('register/', views.register),
-	path('login/', views.login),
+	# path('index/',views.index),
+	path('', lambda _: redirect('/login/')),  # 自动跳转到登录页
+	# path('', views.home),  # 设置首页路由
+	path('register/', views.register, name='register'),
+	path('login/', views.login, name='login'),
+	# path('user/', views.user_page, name='user_page'),
 	path('travel_info/<int:travel_id>/', views.travel_info, name='travel_info'),
 	path('add_travel_info/<int:user_id>/', views.add_travel_info, name='add_travel_info'),
 ]
