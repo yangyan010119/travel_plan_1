@@ -28,7 +28,8 @@ urlpatterns = [
 	# path('', views.home),  # 设置首页路由
 	path('register/', views.register, name='register'),
 	path('login/', views.login, name='login'),
-	# path('user/', views.user_page, name='user_page'),
+	path('user/', views.user_page, name='user_page'),
+	path('dashboard/', views.travel_dashboard, name='travel_dashboard'),
 	path('travel_info/<int:travel_id>/', views.travel_info, name='travel_info'),
 	path('add_travel_info/<int:user_id>/', views.add_travel_info, name='add_travel_info'),
 ]

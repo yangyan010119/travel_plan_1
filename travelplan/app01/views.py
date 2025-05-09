@@ -62,6 +62,9 @@ def login(request):
         try:
             user = User.objects.get(username=username)
             if user.password == password:
+                # 设置session
+                request.session['user_id'] = user.id
+                request.session['username'] = user.username
                 return redirect('user_page')
             else:
                 error_message = "Password ERROR"
@@ -77,7 +80,25 @@ def login(request):
     return render(request, "app01/login.html",{'error_message': error_message})
 
 
-# def user_page(request):
+def user_page(request):
+    # 检查登录状态
+    if 'user_id' not in request.session:
+        return redirect('login')
+
+    try:
+        # 获取用户信息
+        user = User.objects.get(id=request.session['user_id'])
+        context = {
+            'username': user.username,
+            'email': user.email,
+            'mobile': user.mobile,
+        }
+        return render(request, 'app01/user.html', context)
+
+    except User.DoesNotExist:
+        # 用户不存在则清除session
+        request.session.flush()
+        return redirect('login')
 
 
 # 显示旅游信息
@@ -100,3 +121,18 @@ def add_travel_info(request, user_id):
 
     return render(request, 'app01/add_travel_info.html', {'form': form})
 
+
+def travel_dashboard(request):
+    # 检查登录状态
+    if 'user_id' not in request.session:
+        return redirect('login')
+
+    # 获取用户对象
+    user = get_object_or_404(User, id=request.session['user_id'])
+
+    # 处理表单提交逻辑（后续可以扩展）
+    if request.method == 'POST':
+        # 这里可以添加处理偏好设置表单的逻辑
+        pass
+
+    return render(request, 'app01/traveldashboard.html', {'user': user})
